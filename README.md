@@ -4,6 +4,7 @@
 
 # Requirements
 * Tested just under Ruby >= 2.0.0 
+* git installed
 * The following non default gems should be installed
 ** zip
 
