@@ -5,6 +5,7 @@
 # Requirements
 * Tested just under Ruby >= 2.0.0 
 * git installed
+* Add a working Rundeck token to config.yaml file
 * The following non default gems should be installed
 ** zip
 
