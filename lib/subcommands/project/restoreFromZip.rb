@@ -6,7 +6,7 @@ class RestoreFromZip < Subcommand
 
     @import_file = target
     @subcommand_action = "restoreFromZip"
-    @subcommand_full = "project  #{subcommand_action}"
+    @subcommand_full = "project #{subcommand_action}"
     @cmd_example = "#{subcommand_full} foo.zip"
     @description = "Restore Rundeck project from a project zip file, assuming the file name match the project name, this action remove the existent project!"
 
