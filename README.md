@@ -26,6 +26,7 @@ Available subcommands:
   projects pushToRepo                               Push Rundeck projects to git repository, requires a valid non empty ssh connection string to a repository as parameter, an empty README.md file would be enough
   projects restoreFromRepo                          Restore Rundeck projects from repository, this action remove all existent projects on the local instance
   project restoreFromZip                            Restore Rundeck project from a project zip file, assuming the file name match the project name, this action remove the existent project!
+
 Examples:
 
   ruby rd-tool projects replicateToInstance rundeck.foo.bar
