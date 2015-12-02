@@ -27,6 +27,7 @@ class RestoreFromZip < Subcommand
     rescue
         puts "Failing to delete #{project_name}"
     end
+    rundeck.project_create(project_name)
     rundeck.project_import(import_file_full_path)
 
   end
