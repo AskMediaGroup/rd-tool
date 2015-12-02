@@ -14,10 +14,12 @@ class RestoreFromZip < Subcommand
 
   def run
     
+    import_file = File.absolute_path(import_file)
     puts "Running #{subcommand_full} #{import_file}"
     rundeck = Rundeck.new
 
     project_name = import_file.split('.')[0]
+
     begin 
         rundeck.project_delete(project_name)
     rescue
