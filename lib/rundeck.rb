@@ -7,14 +7,13 @@ class Rundeck
 
   attr_reader :token, :instance, :url, :port
 
-  def initialize(instance=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_hostname'], token=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_token'])
+  def initialize(instance=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_local_instance'], token=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_token'])
 
     #TODO: Factory for REST Client
     #TODO: Read token from file
     @token = token
     @instance = instance
-    @port = YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_port']
-    @url = "http://#{instance}:#{port}"
+    @url = "http://#{instance}"
 
     raise "Rundeck #{instance} is not active or its API is not available!" unless rundeck_active?
 

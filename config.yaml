@@ -1,6 +1,5 @@
 ---
 rundeck_token: <your_token>
-rundeck_hostname: localhost
-rundeck_port: 4440
+rundeck_local_instance: localhost:4440
 git_user: unknown
 git_email: unknown@unknown.unknown
