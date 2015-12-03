@@ -7,7 +7,7 @@ class Rundeck
 
   attr_reader :token, :instance, :url, :port
 
-  def initialize(instance=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_local_instance'], token=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_token'])
+  def initialize(instance=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_default_instance'], token=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_token'])
 
     #TODO: Factory for REST Client
     #TODO: Read token from file
