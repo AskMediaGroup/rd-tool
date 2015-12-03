@@ -7,8 +7,12 @@
 * git installed
 * Add a working Rundeck token to config.yaml file
 * The following non default gems should be installed
-** zip
-** rest-client
+  * zip
+  * rest-client
+```
+gem install zip
+gem install rest-client
+```
 
 # Disclaimer
 * Many stuff could be improved I know but this is my already working MVP, I just wanted to share it in case it could be useful for someone, don't hesitate to contact me if you have any suggestion.. but please be constructive :-)
