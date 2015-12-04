@@ -13,6 +13,64 @@
 gem install zip
 gem install rest-client
 ```
+* Configure a valid token in Rundeck and set proper acl for api_token_group
+```
+description: API project level access control
+context:
+  project: '.*' # all projects
+for:
+  resource:
+    - equals:
+        kind: job
+      allow: [create,delete] # allow create and delete jobs
+    - equals:
+        kind: node
+      allow: [read,create,update,refresh] # allow refresh node sources
+    - equals:
+        kind: event
+      allow: [read,create] # allow read/create events
+  adhoc:
+    - allow: [read,run,kill] # allow running/killing adhoc jobs and read output
+  job:
+    - allow: [create,read,update,delete,run,kill] # allow create/read/write/delete/run/kill of all jobs
+  node:
+    - allow: [read,run] # allow read/run for all nodes
+by:
+  group: api_token_group
+
+---
+
+description: Admin Application level access control, applies to creating/deleting projects, admin of user profiles, viewing projects and reading system information.
+context:
+  application: 'rundeck'
+for:
+  resource:
+    - equals:
+        kind: project
+      allow: [create] # allow create of projects
+    - equals:
+        kind: system
+      allow: [read,enable_executions,disable_executions,admin] # allow read of system info, enable/disable all executions
+    - equals:
+        kind: system_acl
+      allow: [read,create,update,delete,admin] # allow modifying system ACL files
+    - equals:
+        kind: user
+      allow: [admin] # allow modify user profiles
+  project:
+    - match:
+        name: '.*'
+      allow: [read,import,export,configure,delete,admin] # allow full access of all projects or use 'admin'
+  project_acl:
+    - match:
+        name: '.*'
+      allow: [read,create,update,delete,admin] # allow modifying project-specific ACL files
+  storage:
+    - allow: [read,create,update,delete] # allow access for /ssh-key/* storage content
+
+by:
+  group: api_token_group
+```
 
 # Disclaimer
 * Many stuff could be improved I know but this is my already working MVP, I just wanted to share it in case it could be useful for someone, don't hesitate to contact me if you have any suggestion.. but please be constructive :-)
