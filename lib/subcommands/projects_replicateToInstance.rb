@@ -1,4 +1,4 @@
-class ReplicateToInstance < Subcommand
+class ProjectsReplicateToInstance < Subcommand
 
   attr_reader :rundeck_instance, :subcommand_action, :subcommand_full, :description, :cmd_example
 
@@ -20,6 +20,7 @@ class ReplicateToInstance < Subcommand
     rundeck.projects_to_zip(@@tmp_directory)
 
     rundeck = Rundeck.new(rundeck_instance)
+    rundeck.projects_delete_all
     rundeck.projects_import(@@tmp_directory)
 
   end

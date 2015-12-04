@@ -1,4 +1,4 @@
-class BackupToFile < Subcommand
+class ProjectsBackupToFile < Subcommand
 
   attr_reader :export_file, :subcommand_action, :subcommand_full, :description, :cmd_example, :tmp_directory
 

@@ -106,12 +106,8 @@ class Rundeck
   end
 
   def projects_import(directory)
-
-    projects_delete_all
-
     Dir[File.join(directory,'*.zip')].each do |project_file|
       puts "Importing #{project_file}"
-      project_create(project_name_from_file(project_file))
       project_import(project_file)
     end
   end
@@ -124,7 +120,11 @@ class Rundeck
   
   def project_delete(project_name)
     puts "Deleting #{project_name}"
-    RestClient.delete build_uri("/api/14/project/#{project_name}")
+    begin
+      RestClient.delete build_uri("/api/14/project/#{project_name}")
+    rescue Exception => e
+      puts "Delete failed #{e.message}"
+    end
   end
 
   def project_create(project_name)
@@ -143,6 +143,8 @@ class Rundeck
     }
 
     project_name = project_name_from_file(project_file)
+    project_delete(project_name)
+    project_create(project_name)
     uri = build_uri("/api/14/project/#{project_name}/import", query_parameters)
 
     response_json = JSON.parse(RestClient.put uri, File.read(project_file) , {:content_type => :zip, :accept => :json})
@@ -178,5 +180,4 @@ class Rundeck
   end
 
 end
-
 

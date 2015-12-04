@@ -19,25 +19,25 @@ gem install rest-client
 
 ```
 Usage: rd-tool SUBCOMMAND SUBCOMMAND TARGET
-rd-tool requires at least Rundeck 2.6.0 and a valid token within token.yaml file
+rd-tool requires at least Rundeck 2.6.0
 
 Available subcommands:
 
   projects replicateToInstance                      Replicate Rundeck projects to another Rundeck instance, this action remove all existent project on target
-  projects backupToFile                             Backup Rundeck projects to a zip file
   projects replicateFromInstance                    Replicate Rundeck projects from another Rundeck instance, this action remove all existent project on the local Instance
-  projects restoreFromFile                          Restore Rundeck projects from a previously generated backupToFile zip file, this action remove all existent project
-  projects pushToRepo                               Push Rundeck projects to git repository, requires a valid non empty ssh connection string to a repository as parameter, an empty README.md file would be enough
-  projects restoreFromRepo                          Restore Rundeck projects from repository, this action remove all existent projects on the local instance
-  project restoreFromZip                            Restore Rundeck project from a project zip file, assuming the file name match the project name, this action remove the existent project!
+  projects pushToRepo                               Push Rundeck projects to git repository, requires a non empty repository url as parameter
+  projects restoreFromFile                          Restore Rundeck projects from a previously generated backupToFile zip file
+  projects restoreFromRepo                          Restore Rundeck projects from repository
+  projects backupToFile                             Backup Rundeck projects to a zip file
+  project restoreFromFile                           Restore Rundeck project from a project zip file, assuming the file name match the project name
 
 Examples:
 
   ruby rd-tool projects replicateToInstance rundeck.foo.bar
-  ruby rd-tool projects backupToFile foo.zip
   ruby rd-tool projects replicateFromInstance rundeck.foo.bar
-  ruby rd-tool projects restoreFromFile foo.zip
   ruby rd-tool projects pushToRepo 'git@git.foo.com:devops-rundeck/foo-repo.git'
+  ruby rd-tool projects restoreFromFile foo.zip
   ruby rd-tool projects restoreFromRepo 'https://github.com/snebel29/foo-repo'
-  ruby rd-tool project restoreFromZip foo.zip
+  ruby rd-tool projects backupToFile foo.zip
+  ruby rd-tool project restoreFromFile foo.zip
 ```

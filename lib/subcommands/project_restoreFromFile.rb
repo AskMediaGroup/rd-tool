@@ -1,14 +1,14 @@
-class RestoreFromZip < Subcommand
+class ProjectRestoreFromFile < Subcommand
 
   attr_reader :import_file, :subcommand_action, :subcommand_full, :description, :cmd_example
 
   def initialize(target=nil)
 
     @import_file = target
-    @subcommand_action = "restoreFromZip"
+    @subcommand_action = "restoreFromFile"
     @subcommand_full = "project #{subcommand_action}"
     @cmd_example = "#{subcommand_full} foo.zip"
-    @description = "Restore Rundeck project from a project zip file, assuming the file name match the project name, this action remove the existent project!"
+    @description = "Restore Rundeck project from a project zip file, assuming the file name match the project name"
 
   end
 
@@ -21,13 +21,6 @@ class RestoreFromZip < Subcommand
 
     puts "Running #{subcommand_full} #{import_file_full_path}"
     rundeck = Rundeck.new
-
-    begin 
-        rundeck.project_delete(project_name)
-    rescue
-        puts "Failing to delete #{project_name}"
-    end
-    rundeck.project_create(project_name)
     rundeck.project_import(import_file_full_path)
 
   end

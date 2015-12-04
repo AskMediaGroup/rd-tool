@@ -34,7 +34,7 @@ class Rdtool
   end
 
   def subcommands_files
-    files = Dir.glob(File.expand_path(File.join(my_directory, subcommand_dir, "/**/*.rb")))
+    files = Dir.glob(File.expand_path(File.join(my_directory, subcommand_dir, "/*.rb")))
     return files
   end
 
@@ -60,7 +60,7 @@ class Rdtool
     if @@subcommands.nil?
       sub = []
       subcommands_files.each do |sub_action| 
-        sub_action = extract_subcommand_action_from_path(sub_action)
+        sub_action = extract_class_name_from_path(sub_action)
         obj = Object.const_get(sub_action).new
         sub.push(obj)
       end
@@ -70,11 +70,15 @@ class Rdtool
       return @@subcommands
   end
 
-  def extract_subcommand_action_from_path(path)
+  def extract_class_name_from_path(path)
       file_name = File.basename(path)
       file_name.slice!(".rb")
-      file_name = upcase_first_letter(file_name)
-      return file_name
+
+      context = file_name.split('_')[0]
+      sub = file_name.split('_')[1]
+
+      class_name = "#{upcase_first_letter(context)}#{upcase_first_letter(sub)}"
+      return class_name
   end
   
   def upcase_first_letter(str)

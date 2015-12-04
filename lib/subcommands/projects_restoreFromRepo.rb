@@ -1,4 +1,4 @@
-class RestoreFromRepo < Subcommand
+class ProjectsRestoreFromRepo < Subcommand
 
   attr_reader :remote_repository, :subcommand_action, :subcommand_full, :description, :cmd_example
 
@@ -8,7 +8,7 @@ class RestoreFromRepo < Subcommand
     @subcommand_action = "restoreFromRepo"
     @subcommand_full = "projects #{subcommand_action}"
     @cmd_example = "#{subcommand_full} 'https://github.com/snebel29/foo-repo'"
-    @description = "Restore Rundeck projects from repository, this action remove all existent projects on the local instance"
+    @description = "Restore Rundeck projects from repository"
 
   end
 

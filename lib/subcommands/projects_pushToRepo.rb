@@ -1,4 +1,4 @@
-class PushToRepo < Subcommand
+class ProjectsPushToRepo < Subcommand
 
   attr_reader :remote_repository, :subcommand_action, :subcommand_full, :description, :cmd_example
 
@@ -8,7 +8,7 @@ class PushToRepo < Subcommand
     @subcommand_action = "pushToRepo"
     @subcommand_full = "projects #{subcommand_action}"
     @cmd_example = "#{subcommand_full} 'git@git.foo.com:devops-rundeck/foo-repo.git'"
-    @description = "Push Rundeck projects to git repository, requires a valid non empty repository url as parameter, an empty README.md file would be enough"
+    @description = "Push Rundeck projects to git repository, requires a non empty repository url as parameter"
 
   end
 

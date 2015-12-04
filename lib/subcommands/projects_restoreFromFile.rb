@@ -1,4 +1,4 @@
-class RestoreFromFile < Subcommand
+class ProjectsRestoreFromFile < Subcommand
 
   attr_reader :import_file, :subcommand_action, :subcommand_full, :description, :cmd_example
 
@@ -8,7 +8,7 @@ class RestoreFromFile < Subcommand
     @subcommand_action = "restoreFromFile"
     @subcommand_full = "projects #{subcommand_action}"
     @cmd_example = "#{subcommand_full} foo.zip"
-    @description = "Restore Rundeck projects from a previously generated backupToFile zip file, this action remove all existent project"
+    @description = "Restore Rundeck projects from a previously generated backupToFile zip file"
 
   end
 
