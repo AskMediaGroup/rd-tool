@@ -133,8 +133,9 @@ class Rdtool
   end
 
   def run()
-    subcommand_action = args[1].dup
-    action_obj = Object.const_get(upcase_first_letter(subcommand_action)).new(target)
+    subcommand_context = upcase_first_letter(args[0].dup)
+    subcommand_action = upcase_first_letter(args[1].dup)
+    action_obj = Object.const_get("#{subcommand_context}#{subcommand_action}").new(target)
     action_obj.run
   end
 
