@@ -9,13 +9,17 @@ class Rdtool
   @@separation_char  = " "
   @@subcommands = nil
 
-  attr_reader :args, :subcommand_dir, :parent_directory, :script_name
+  attr_reader :args, :subcommand_dir, :parent_directory, :script_name, :context, :subcommand, :parameters
 
   def initialize(args, script_name)
 
     @args = args
     @subcommand_dir = 'subcommands'
     @script_name = File.basename(script_name)
+
+    @context = args.shift.dup
+    @subcommand =  args.shift.dup
+    @parameters = args.dup
 
     require_libs
     require_subcommands
@@ -25,8 +29,10 @@ class Rdtool
 
   def arguments_valid?(args)
     is_valid = false
-    subcommands.each do |obj|
-      if args_subcommand_full(args) == obj.subcommand_full
+    args_subcommand_full = [context,subcommand].join(' ')
+
+    subcommands.each do |obj|      
+      if args_subcommand_full == obj.subcommand_full and args.length == obj.parameters_length 
         is_valid = true
       end
     end
@@ -106,16 +112,6 @@ class Rdtool
       return exm
   end
 
-  def args_subcommand_full(args)
-    args = args.dup
-    args.pop
-    args_subcommand_full = args.join(' ')
-  end
-
-  def target
-    args.dup.last
-  end
-
   def print_usage
     puts ""
     puts "Usage: #{script_name} SUBCOMMAND SUBCOMMAND TARGET"
@@ -133,9 +129,9 @@ class Rdtool
   end
 
   def run()
-    subcommand_context = upcase_first_letter(args[0].dup)
-    subcommand_action = upcase_first_letter(args[1].dup)
-    action_obj = Object.const_get("#{subcommand_context}#{subcommand_action}").new(target)
+    subcommand_context = upcase_first_letter(context)
+    subcommand_action = upcase_first_letter(subcommand)
+    action_obj = Object.const_get("#{subcommand_context}#{subcommand_action}").new(parameters)
     action_obj.run
   end
 

@@ -1,12 +1,13 @@
 class ProjectsReplicateFromInstance < Subcommand
 
-  attr_reader :rundeck_instance, :subcommand_action, :subcommand_full, :description, :cmd_example
+  attr_reader :rundeck_instance, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
 
   def initialize(target=nil)
 
-    @rundeck_instance = target
+    @rundeck_instance = target[0]
     @subcommand_action = "replicateFromInstance"
     @subcommand_full = "projects #{subcommand_action}"
+    @parameters_length = 1
     @cmd_example = "#{subcommand_full} rundeck.foo.bar"
     @description = "Replicate Rundeck projects from another Rundeck instance, this action remove all existent project on the local Instance"
 
