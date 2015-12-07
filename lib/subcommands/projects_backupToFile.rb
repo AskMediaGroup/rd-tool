@@ -1,10 +1,10 @@
 class ProjectsBackupToFile < Subcommand
 
-  attr_reader :export_file, :subcommand_action, :subcommand_full, :description, :cmd_example, :tmp_directory, :parameters_length
+  attr_reader :parameters, :subcommand_action, :subcommand_full, :description, :cmd_example, :tmp_directory, :parameters_length
 
-  def initialize(target=nil)
+  def initialize(parameters=nil)
 
-    @export_file = target[0]
+    @parameters = parameters
     @subcommand_action = "backupToFile"
     @subcommand_full = "projects #{subcommand_action}"
     @parameters_length = 1
@@ -15,6 +15,7 @@ class ProjectsBackupToFile < Subcommand
 
   def run
 
+    export_file = parameters[0]
     puts "Running #{subcommand_full} #{export_file}"
     rundeck = Rundeck.new
 

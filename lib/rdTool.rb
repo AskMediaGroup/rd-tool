@@ -10,6 +10,7 @@ class Rdtool
   @@subcommands = nil
 
   attr_reader :args, :subcommand_dir, :parent_directory, :script_name, :context, :subcommand, :parameters
+  attr_writer :context, :subcommand, :parameters
 
   def initialize(args, script_name)
 
@@ -17,9 +18,9 @@ class Rdtool
     @subcommand_dir = 'subcommands'
     @script_name = File.basename(script_name)
 
-    @context = args.shift.dup
-    @subcommand =  args.shift.dup
-    @parameters = args.dup
+    @context = nil
+    @subcommand =  nil
+    @parameters = nil
 
     require_libs
     require_subcommands
@@ -28,7 +29,14 @@ class Rdtool
   end
 
   def arguments_valid?(args)
+    
     is_valid = false
+    return is_valid if args.length < 3
+ 
+    context = args.shift.dup
+    subcommand =  args.shift.dup
+    parameters = args.dup
+
     args_subcommand_full = [context,subcommand].join(' ')
 
     subcommands.each do |obj|      

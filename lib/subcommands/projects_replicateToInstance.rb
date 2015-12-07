@@ -1,10 +1,10 @@
 class ProjectsReplicateToInstance < Subcommand
 
-  attr_reader :rundeck_instance, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
+  attr_reader :parameters, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
 
-  def initialize(target=nil)
+  def initialize(parameters=nil)
 
-    @rundeck_instance = target[0]
+    @parameters = parameters
     @subcommand_action = "replicateToInstance"
     @subcommand_full = "projects #{subcommand_action}"
     @parameters_length = 1
@@ -15,6 +15,7 @@ class ProjectsReplicateToInstance < Subcommand
 
   def run
 
+    rundeck_instance = parameters[0]
     puts "Running #{subcommand_full} #{rundeck_instance}"
 
     rundeck = Rundeck.new

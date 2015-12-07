@@ -1,10 +1,10 @@
 class ProjectsRestoreFromRepo < Subcommand
 
-  attr_reader :remote_repository, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
+  attr_reader :parameters, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
 
-  def initialize(target=nil)
+  def initialize(parameters=nil)
 
-    @remote_repository = target[0]
+    @parameters = parameters
     @subcommand_action = "restoreFromRepo"
     @subcommand_full = "projects #{subcommand_action}"
     @parameters_length = 1
@@ -15,6 +15,7 @@ class ProjectsRestoreFromRepo < Subcommand
 
   def run
 
+    remote_repository = parameters[0]
     puts "Running #{subcommand_full} #{remote_repository}"
   
     git = Git.new(remote_repository, @@project_definitions_directory)

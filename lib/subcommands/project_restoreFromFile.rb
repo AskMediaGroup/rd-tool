@@ -1,10 +1,10 @@
 class ProjectRestoreFromFile < Subcommand
 
-  attr_reader :import_file, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
+  attr_reader :parameters, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
 
-  def initialize(target=nil)
+  def initialize(parameters=nil)
 
-    @import_file = target[0]
+    @parameters = parameters
     @subcommand_action = "restoreFromFile"
     @subcommand_full = "project #{subcommand_action}"
     @parameters_length = 1
@@ -15,6 +15,7 @@ class ProjectRestoreFromFile < Subcommand
 
   def run
 
+    import_file = parameters[0]
     project_name = import_file.split('.')[0]
     File.absolute_path(import_file)
 
