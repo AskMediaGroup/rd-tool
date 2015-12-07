@@ -101,7 +101,7 @@ class Rundeck
 
   def project_to_file(project, zip_file)
     compressed_project = get("/api/14/project/#{project}/export")
-    FileUtils::mkdir_p File.base(zip_file)
+    FileUtils::mkdir_p File.dirname(zip_file)
     File.open(zip_file, 'w') { |file| file.write(compressed_project)}
   end
 
