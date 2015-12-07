@@ -79,26 +79,31 @@ by:
 * Many stuff could be improved I know but this is my already working MVP, I just wanted to share it in case it could be useful for someone, don't hesitate to contact me if you have any suggestion.. but please be constructive :-)
 
 ```
-Usage: rd-tool SUBCOMMAND SUBCOMMAND TARGET
+Usage: rd-tool SUBCOMMAND SUBCOMMAND <parameter> [<parameter>]
 rd-tool requires at least Rundeck 2.6.0
 
 Available subcommands:
 
-  projects replicateToInstance                      Replicate Rundeck projects to another Rundeck instance, this action remove all existent project on target
-  projects replicateFromInstance                    Replicate Rundeck projects from another Rundeck instance, this action remove all existent project on the local Instance
-  projects pushToRepo                               Push Rundeck projects to git repository, requires a non empty repository url as parameter
-  projects restoreFromFile                          Restore Rundeck projects from a previously generated backupToFile zip file
-  projects restoreFromRepo                          Restore Rundeck projects from repository
-  projects backupToFile                             Backup Rundeck projects to a zip file
-  project restoreFromFile                           Restore Rundeck project from a project zip file, assuming the file name match the project name
+  projects replicateToInstance <rundeck_instance>             Replicate Rundeck projects to another Rundeck instance, this action remove all existent project on target
+  project exportToInstance <project_name> <rundeck_instance>  Export Rundeck project to another Rundeck instance
+  projects replicateFromInstance <rundeck_instance>           Replicate Rundeck projects from another Rundeck instance, this action remove all existent project on the local Instance
+  projects pushToRepo <remote_repository>                     Push Rundeck projects to git repository, requires a non empty repository url as parameter
+  projects restoreFromFile <import_file>                      Restore Rundeck projects from a previously generated backupToFile zip file
+  project backupToFile <export_project> <export_file>         Backup Rundeck projects to a zip file
+  projects restoreFromRepo <remote_repository>                Restore Rundeck projects from repository
+  projects backupToFile <export_file>                         Backup Rundeck projects to a zip file
+  project restoreFromFile <import_file>                       Restore Rundeck project from a project zip file, assuming the file name match the project name
 
 Examples:
 
   ruby rd-tool projects replicateToInstance rundeck.foo.bar
+  ruby rd-tool project exportToInstance foo_project  rundeck.foo.bar
   ruby rd-tool projects replicateFromInstance rundeck.foo.bar
   ruby rd-tool projects pushToRepo 'git@git.foo.com:devops-rundeck/foo-repo.git'
   ruby rd-tool projects restoreFromFile foo.zip
+  ruby rd-tool project backupToFile foo foo.zip
   ruby rd-tool projects restoreFromRepo 'https://github.com/snebel29/foo-repo'
   ruby rd-tool projects backupToFile foo.zip
   ruby rd-tool project restoreFromFile foo.zip
+
 ```
