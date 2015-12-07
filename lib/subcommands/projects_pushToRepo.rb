@@ -1,12 +1,13 @@
 class ProjectsPushToRepo < Subcommand
 
-  attr_reader :parameters, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
+  attr_reader :parameters, :parameters_tag, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
 
   def initialize(parameters=nil)
 
     @parameters = parameters
     @subcommand_action = "pushToRepo"
     @subcommand_full = "projects #{subcommand_action}"
+    @parameters_tag = "<remote_repository>"
     @parameters_length = 1
     @cmd_example = "#{subcommand_full} 'git@git.foo.com:devops-rundeck/foo-repo.git'"
     @description = "Push Rundeck projects to git repository, requires a non empty repository url as parameter"

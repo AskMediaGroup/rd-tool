@@ -4,7 +4,7 @@ require 'fileutils'
 
 class Rdtool
 
-  @@separator_length = 50
+  @@separation_length = 60
   @@left_identation_length  = 2
   @@separation_char  = " "
   @@subcommands = nil
@@ -107,7 +107,8 @@ class Rdtool
   def available_subcommands
     desc = []
     subcommands.each do |obj|
-      desc.push(left_ident("#{obj.subcommand_full}#{@@separation_char * (@@separator_length - obj.subcommand_full.length)}#{obj.description}"))
+      desc_str = "#{obj.subcommand_full} #{obj.parameters_tag}"
+      desc.push(left_ident("#{desc_str}#{@@separation_char * (@@separation_length - desc_str.length)}#{obj.description}"))
     end
       return desc
   end
@@ -122,7 +123,7 @@ class Rdtool
 
   def print_usage
     puts ""
-    puts "Usage: #{script_name} SUBCOMMAND SUBCOMMAND TARGET"
+    puts "Usage: #{script_name} SUBCOMMAND SUBCOMMAND <parameter> [<parameter>]"
     puts "#{script_name} requires at least Rundeck 2.6.0"
     puts ""
     puts "Available subcommands:"

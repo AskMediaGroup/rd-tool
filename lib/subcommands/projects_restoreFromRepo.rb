@@ -1,12 +1,13 @@
 class ProjectsRestoreFromRepo < Subcommand
 
-  attr_reader :parameters, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
+  attr_reader :parameters, :parameters_tag, :subcommand_action, :subcommand_full, :description, :cmd_example, :parameters_length
 
   def initialize(parameters=nil)
 
     @parameters = parameters
     @subcommand_action = "restoreFromRepo"
     @subcommand_full = "projects #{subcommand_action}"
+    @parameters_tag = "<remote_repository>"
     @parameters_length = 1
     @cmd_example = "#{subcommand_full} 'https://github.com/snebel29/foo-repo'"
     @description = "Restore Rundeck projects from repository"

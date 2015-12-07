@@ -1,12 +1,13 @@
 class ProjectsBackupToFile < Subcommand
 
-  attr_reader :parameters, :subcommand_action, :subcommand_full, :description, :cmd_example, :tmp_directory, :parameters_length
+  attr_reader :parameters, :parameters_tag, :subcommand_action, :subcommand_full, :description, :cmd_example, :tmp_directory, :parameters_length
 
   def initialize(parameters=nil)
 
     @parameters = parameters
     @subcommand_action = "backupToFile"
     @subcommand_full = "projects #{subcommand_action}"
+    @parameters_tag = "<export_file>"
     @parameters_length = 1
     @cmd_example = "#{subcommand_full} foo.zip"
     @description = "Backup Rundeck projects to a zip file"
