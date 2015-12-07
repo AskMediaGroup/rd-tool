@@ -16,8 +16,8 @@ class ProjectBackupToFile < Subcommand
 
   def run
 
-    export_file = parameters[0]
-    export_project = parameters[1]
+    export_project = parameters[0]
+    export_file = parameters[1]
 
     puts "Running #{subcommand_full} #{export_file} #{export_project}"
     rundeck = Rundeck.new
