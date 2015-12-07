@@ -22,7 +22,8 @@ class ProjectBackupToFile < Subcommand
     puts "Running #{subcommand_full} #{export_file} #{export_project}"
     rundeck = Rundeck.new
     rundeck.project_to_file(export_project, export_file)
-
+    puts "Successfull created #{export_file}" if File.exists?(export_file)
+    
   end
 
 end
