@@ -33,9 +33,9 @@ class Rdtool
     is_valid = false
     return is_valid if args.length < 3
  
-    context = args.shift.dup
-    subcommand =  args.shift.dup
-    parameters = args.dup
+    self.context = args.shift.dup
+    self.subcommand =  args.shift.dup
+    self.parameters = args.dup
 
     args_subcommand_full = [context,subcommand].join(' ')
 
