@@ -9,11 +9,14 @@
 * The following non default gems should be installed
   * zip
   * rest-client
+  
 ```
 gem install zip
 gem install rest-client
 ```
+
 * Configure a valid token in Rundeck and set proper acl for api_token_group
+
 ```
 description: API project level access control
 context:
