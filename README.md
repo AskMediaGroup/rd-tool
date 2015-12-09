@@ -84,26 +84,28 @@ rd-tool requires at least Rundeck 2.6.0
 
 Available subcommands:
 
-  projects replicateToInstance <rundeck_instance>             Replicate Rundeck projects to another Rundeck instance, this action remove all existent project on target
-  project exportToInstance <project_name> <rundeck_instance>  Export Rundeck project to another Rundeck instance
-  projects replicateFromInstance <rundeck_instance>           Replicate Rundeck projects from another Rundeck instance, this action remove all existent project on the local Instance
-  projects pushToRepo <remote_repository>                     Push Rundeck projects to git repository, requires a non empty repository url as parameter
-  projects restoreFromFile <import_file>                      Restore Rundeck projects from a previously generated backupToFile zip file
-  project backupToFile <export_project> <export_file>         Backup Rundeck projects to a zip file
-  projects restoreFromRepo <remote_repository>                Restore Rundeck projects from repository
-  projects backupToFile <export_file>                         Backup Rundeck projects to a zip file
-  project restoreFromFile <import_file>                       Restore Rundeck project from a project zip file, assuming the file name match the project name
+  jobs copyToProject <project_origin> <project_destination>                  Copy all the jobs from project_origin to project_destination, keep group hierarchy and create new UUIDs
+  project backupToFile <export_project> <export_file>                        Backup Rundeck projects to a zip file
+  project exportToInstance <project_name> <rundeck_instance>                 Export Rundeck project to another Rundeck instance
+  project restoreFromFile <import_file>                                      Restore Rundeck project from a project zip file, assuming the file name match the project name
+  projects backupToFile <export_file>                                        Backup Rundeck projects to a zip file
+  projects pushToRepo <remote_repository>                                    Push Rundeck projects to git repository, requires a non empty repository url as parameter
+  projects replicateFromInstance <rundeck_instance>                          Replicate Rundeck projects from another Rundeck instance, this action remove all existent project on the local Instance
+  projects replicateToInstance <rundeck_instance>                            Replicate Rundeck projects to another Rundeck instance, this action remove all existent project on target
+  projects restoreFromFile <import_file>                                     Restore Rundeck projects from a previously generated backupToFile zip file
+  projects restoreFromRepo <remote_repository>                               Restore Rundeck projects from repository
 
 Examples:
 
-  ruby rd-tool projects replicateToInstance rundeck.foo.bar
-  ruby rd-tool project exportToInstance foo_project  rundeck.foo.bar
-  ruby rd-tool projects replicateFromInstance rundeck.foo.bar
-  ruby rd-tool projects pushToRepo 'git@git.foo.com:devops-rundeck/foo-repo.git'
-  ruby rd-tool projects restoreFromFile foo.zip
+  ruby rd-tool jobs copyToProject PROJECT1 PROJECT2
   ruby rd-tool project backupToFile foo foo.zip
-  ruby rd-tool projects restoreFromRepo 'https://github.com/snebel29/foo-repo'
-  ruby rd-tool projects backupToFile foo.zip
+  ruby rd-tool project exportToInstance foo_project  rundeck.foo.bar
   ruby rd-tool project restoreFromFile foo.zip
+  ruby rd-tool projects backupToFile foo.zip
+  ruby rd-tool projects pushToRepo 'git@git.foo.com:devops-rundeck/foo-repo.git'
+  ruby rd-tool projects replicateFromInstance rundeck.foo.bar
+  ruby rd-tool projects replicateToInstance rundeck.foo.bar
+  ruby rd-tool projects restoreFromFile foo.zip
+  ruby rd-tool projects restoreFromRepo 'https://github.com/snebel29/foo-repo'
 
 ```
