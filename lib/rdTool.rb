@@ -4,7 +4,7 @@ require 'fileutils'
 
 class Rdtool
 
-  @@separation_length = 60
+  @@separation_length = 75
   @@left_identation_length  = 2
   @@separation_char  = " "
   @@subcommands = nil
@@ -110,7 +110,7 @@ class Rdtool
       desc_str = "#{obj.subcommand_full} #{obj.parameters_tag}"
       desc.push(left_ident("#{desc_str}#{@@separation_char * (@@separation_length - desc_str.length)}#{obj.description}"))
     end
-      return desc
+      return desc.sort
   end
 
   def examples
@@ -118,7 +118,7 @@ class Rdtool
     subcommands.each do |obj|
       exm.push(left_ident("ruby #{script_name} #{obj.cmd_example}"))
     end
-      return exm
+      return exm.sort
   end
 
   def print_usage

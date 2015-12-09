@@ -19,8 +19,8 @@ class Rundeck
 
   end
 
-  def get(path)
-    RestClient.get build_uri(path), :content_type => :json, :accept => :json
+  def get(path, params={:content_type => :json, :accept => :json},qp=nil)
+    RestClient.get build_uri(path,qp), params
   end
 
   def rundeck_active?
@@ -46,6 +46,35 @@ class Rundeck
     qps = qps.join('&')
 
     "#{@url}#{path}?#{qps}"
+  end
+
+  def jobs(project)
+    response_json = JSON.parse(get("/api/14/project/#{project}/jobs"))
+    jobs = Array.new
+    response_json.each { |job| jobs << job['name'] }
+    return jobs
+  end
+
+  def jobs_to_file(project, definition_file)
+    response_yaml = get("/api/14/project/#{project}/jobs/export",{},{ :format => 'yaml' })
+    FileUtils::mkdir_p File.dirname(definition_file)
+    File.open(definition_file, 'w') { |file| file.write(response_yaml)}
+  end
+
+  def jobs_import(project,jobs_file)
+    response_json = JSON.parse(RestClient.post build_uri("/api/14/project/#{project}/jobs/import", 
+                    {:dupeOption => 'update', :uuidOption => 'remove'}), File.read(jobs_file), 
+                    { :accept => :json, :content_type => 'application/yaml', :format => 'yaml'})
+
+    succeeded = response_json['succeeded'].count
+    failed = response_json['failed'].count
+    skipped = response_json['skipped'].count
+
+    raise "jobs import failed: #{failed} skipped: #{skipped} with json: #{response_json}" if failed != 0 or skipped != 0
+    jobs = []
+    response_json['succeeded'].each { |j| jobs << j['name']}
+    puts "Imported #{succeeded} jobs successfully: #{jobs}"
+
   end
 
   def projects
