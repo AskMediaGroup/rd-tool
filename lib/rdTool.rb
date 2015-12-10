@@ -40,7 +40,7 @@ class Rdtool
     args_subcommand_full = [context,subcommand].join(' ')
 
     subcommands.each do |obj|      
-      if args_subcommand_full == obj.subcommand_full and args.length == obj.parameters_length 
+      if args_subcommand_full == obj.subcommand_full and args.length >= obj.parameters_length 
         is_valid = true
       end
     end

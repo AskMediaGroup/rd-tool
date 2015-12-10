@@ -73,7 +73,7 @@ class Rundeck
     raise "jobs import failed: #{failed} skipped: #{skipped} with json: #{response_json}" if failed != 0 or skipped != 0
     jobs = []
     response_json['succeeded'].each { |j| jobs << j['name']}
-    puts "Imported #{succeeded} jobs successfully: #{jobs}"
+    puts "Project: #{project} Imported #{succeeded} jobs successfully: #{jobs}"
 
   end
 
