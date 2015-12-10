@@ -79,7 +79,7 @@ by:
 * Many stuff could be improved I know but this is my already working MVP, I just wanted to share it in case it could be useful for someone, don't hesitate to contact me if you have any suggestion.. but please be constructive :-)
 
 ```
-Usage: rd-tool SUBCOMMAND SUBCOMMAND <parameter> [<parameter>]
+Usage: rd-tool RESOURCE SUBCOMMAND <parameter> [<parameter>]
 rd-tool requires at least Rundeck 2.6.0
 
 Available subcommands:

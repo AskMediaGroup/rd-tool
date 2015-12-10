@@ -17,7 +17,12 @@ class JobsCopyToAllProjects < Subcommand
   def run
 
     project_origin = parameters[0]
-    exclude_regexp = parameters[1] if parameters.length == 2 || exclude_regexp = nil
+
+    if parameters.length == 2
+        exclude_regexp = parameters[1]
+    else
+        exclude_regexp = nil
+    end
 
     puts "Running #{subcommand_full} #{project_origin} #{exclude_regexp}"
     local_project_file = File.join(@@tmp_directory,project_origin) + ".yaml"
