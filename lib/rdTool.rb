@@ -116,7 +116,7 @@ class Rdtool
   def examples
     exm = []
     subcommands.each do |obj|
-      exm.push(left_ident("ruby #{script_name} #{obj.cmd_example}"))
+      exm.push(left_ident("#{script_name} #{obj.cmd_example}"))
     end
       return exm.sort
   end

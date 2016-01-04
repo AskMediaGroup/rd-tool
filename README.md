@@ -98,16 +98,16 @@ Available subcommands:
 
 Examples:
 
-  ruby rd-tool jobs copyToAllProjects PROJECT1 '^ADMIN$'
-  ruby rd-tool jobs copyToProject PROJECT1 PROJECT2
-  ruby rd-tool project backupToFile foo foo.zip
-  ruby rd-tool project exportToInstance foo_project  rundeck.foo.bar
-  ruby rd-tool project restoreFromFile foo.zip
-  ruby rd-tool projects backupToFile foo.zip
-  ruby rd-tool projects pushToRepo 'git@git.foo.com:devops-rundeck/foo-repo.git'
-  ruby rd-tool projects replicateFromInstance rundeck.foo.bar
-  ruby rd-tool projects replicateToInstance rundeck.foo.bar
-  ruby rd-tool projects restoreFromFile foo.zip
-  ruby rd-tool projects restoreFromRepo 'https://github.com/snebel29/foo-repo'
+  rd-tool jobs copyToAllProjects PROJECT1 '^ADMIN$'
+  rd-tool jobs copyToProject PROJECT1 PROJECT2
+  rd-tool project backupToFile foo foo.zip
+  rd-tool project exportToInstance foo_project  rundeck.foo.bar
+  rd-tool project restoreFromFile foo.zip
+  rd-tool projects backupToFile foo.zip
+  rd-tool projects pushToRepo 'git@git.foo.com:devops-rundeck/foo-repo.git'
+  rd-tool projects replicateFromInstance rundeck.foo.bar
+  rd-tool projects replicateToInstance rundeck.foo.bar
+  rd-tool projects restoreFromFile foo.zip
+  rd-tool projects restoreFromRepo 'https://github.com/snebel29/foo-repo'
 
 ```
