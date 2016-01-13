@@ -180,7 +180,7 @@ class Rundeck
     if response_json['import_status'] == 'successful'
       puts "Project #{project_name} imported successfully"
     else
-      raise "Import failed for project #{project_name}" 
+      raise "Import failed for project #{project_name} because import_status = #{response_json['import_status']}" 
     end
 
   end
