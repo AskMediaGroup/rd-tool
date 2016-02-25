@@ -161,19 +161,24 @@ class Rundeck
     response = RestClient.post build_uri("/api/14/projects"), { 'name' => project_name }.to_json, :content_type => :json, :accept => :json
   end
 
-  def project_import(project_file)
+  def project_import(project_file, delete_project=true, import_executions=true)
 
     query_parameters = {
     
       :jobUuidOption => 'preserve',
-      :importExecutions => 'true',
+      :importExecutions => import_executions.to_s,
       :importConfig => 'true',
       :importACL => 'true'
     }
 
     project_name = project_name_from_file(project_file)
-    project_delete(project_name)
-    project_create(project_name)
+
+    if delete_project == true
+        project_delete(project_name)
+    end
+
+    project_create(project_name) if not projects.include?(project_name)
+
     uri = build_uri("/api/14/project/#{project_name}/import", query_parameters)
 
     response_json = JSON.parse(RestClient.put uri, File.read(project_file) , {:content_type => :zip, :accept => :json})

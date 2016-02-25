@@ -4,7 +4,7 @@ require 'fileutils'
 
 class Rdtool
 
-  @@separation_length = 75
+  @@separation_length = 90
   @@left_identation_length  = 2
   @@separation_char  = " "
   @@subcommands = nil
