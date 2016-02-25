@@ -149,11 +149,7 @@ class Rundeck
   
   def project_delete(project_name)
     puts "Deleting #{project_name}"
-    begin
-      RestClient.delete build_uri("/api/14/project/#{project_name}")
-    rescue Exception => e
-      puts "Delete #{project_name} failed #{e.message}"
-    end
+    RestClient.delete build_uri("/api/14/project/#{project_name}")
   end
 
   def project_create(project_name)
@@ -173,7 +169,7 @@ class Rundeck
 
     project_name = project_name_from_file(project_file)
 
-    if delete_project == true
+    if delete_project == true and projects.include?(project_name)
         project_delete(project_name)
     end
 
