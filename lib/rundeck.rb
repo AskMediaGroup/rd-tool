@@ -152,7 +152,7 @@ class Rundeck
     begin
       RestClient.delete build_uri("/api/14/project/#{project_name}")
     rescue Exception => e
-      puts "Delete failed #{e.message}"
+      puts "Delete #{project_name} failed #{e.message}"
     end
   end
 
