@@ -10,7 +10,7 @@ class ProjectExportToInstance < Subcommand
     @parameters_tag = "<project_name> <rundeck_instance> [del_proj] [imp_exec]"
     @parameters_length = 2 # This is 2 here because the other parameters are optional
     @cmd_example = "#{subcommand_full} foo_project rundeck.foo.bar true false"
-    @description = "Export Rundeck project to another Rundeck instance"
+    @description = "Export Rundeck project to another Rundeck instance, optionally: delete project and import executions as boolean flags"
 
   end
 

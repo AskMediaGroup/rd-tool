@@ -87,7 +87,8 @@ Available subcommands:
   jobs copyToAllProjects <project_origin> [<exclude_project_regexp>]                        Copy all the jobs from project_origin to all projects excluding, keep group hierarchy and create new UUIDs
   jobs copyToProject <project_origin> <project_destination>                                 Copy all the jobs from project_origin to project_destination, keep group hierarchy and create new UUIDs
   project backupToFile <export_project> <export_file>                                       Backup Rundeck projects to a zip file
-  project exportToInstance <project_name> <rundeck_instance> [del_proj] [imp_exec]          Export Rundeck project to another Rundeck instance
+  project exportToInstance <project_name> <rundeck_instance> [del_proj] [imp_exec]          Export Rundeck project to another Rundeck instance, optionally: delete project and import executions as boolean flags
+  project promoteToInstance <project_name> <rundeck_instance>                               Export Rundeck project to another Rundeck instance, node delete and no executions will be import
   project restoreFromFile <import_file>                                                     Restore Rundeck project from a project zip file, assuming the file name match the project name
   projects backupToFile <export_file>                                                       Backup Rundeck projects to a zip file
   projects pushToRepo <remote_repository>                                                   Push Rundeck projects to git repository, requires a non empty repository url as parameter
@@ -102,6 +103,7 @@ Examples:
   rd-tool jobs copyToProject PROJECT1 PROJECT2
   rd-tool project backupToFile foo foo.zip
   rd-tool project exportToInstance foo_project rundeck.foo.bar true false
+  rd-tool project promoteToInstance foo_project rundeck.foo.bar
   rd-tool project restoreFromFile foo.zip
   rd-tool projects backupToFile foo.zip
   rd-tool projects pushToRepo 'git@git.foo.com:devops-rundeck/foo-repo.git'
