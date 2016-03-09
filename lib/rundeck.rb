@@ -1,3 +1,4 @@
+require 'set'
 require 'socket'
 require 'rest-client'
 require 'json'
@@ -42,7 +43,7 @@ class Rundeck
     end
 
     qps = []
-    query_parameters.each { |param, value| qps << param.to_s + '=' + value }
+    query_parameters.each { |param, value| qps << param.to_s + '=' + value.to_s }
     qps = qps.join('&')
 
     "#{@url}#{path}?#{qps}"
@@ -179,7 +180,7 @@ class Rundeck
 
     response_json = JSON.parse(RestClient.put uri, File.read(project_file) , {:content_type => :zip, :accept => :json})
     if response_json['import_status'] == 'successful'
-      puts "Project #{project_name} imported successfully"
+      puts "Project #{project_name} iget_executions_ids(executions)mported successfully"
     else
       raise "Import failed for project #{project_name} because import_status = #{response_json['import_status']}" 
     end
@@ -207,6 +208,54 @@ class Rundeck
       end   
     end
 
+  end
+
+  def iso_8601(date)
+    Date.strptime(date.to_s, '%Y-%m-%d').to_s + "T00:00:00Z"
+  end
+
+  def purge_executions(days_to_keep)
+
+    _end = Date.strptime((Date.today - days_to_keep).to_s, '%Y-%m-%d').to_s + "T00:00:00Z"
+    ids = []
+
+    projects.each do |project|
+
+        offset = 0
+        max = 25
+        count = -1
+
+        until count == 0 do
+            qp = { :offset => offset, :max => max, :end => _end}
+            executions = executions(project, qp)
+            ids << get_executions_ids(executions)
+            count = executions['paging']['count'].to_i
+            offset += max
+        end
+    end
+
+    ids = ids.flatten.to_set.to_a
+    bulk_delete_executions(ids)
+  end
+
+  def bulk_delete_executions(ids)
+    
+    max = 25
+    ids.each_slice(max) do |chunk|
+        puts chunk    
+    end
+  end
+
+  def get_executions_ids(executions)
+    ids = []
+    executions['executions'].find_all do |e|
+      ids << e['id'] if e.has_key?('id')
+    end
+    ids
+  end
+
+  def executions(project, query_parameters=nil)
+    JSON.parse(RestClient.get build_uri("/api/14/project/#{project}/executions", query_parameters), {:content_type => :json, :accept => :json})
   end
 
 end
