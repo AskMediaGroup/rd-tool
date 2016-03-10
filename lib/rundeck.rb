@@ -191,11 +191,11 @@ class Rundeck
 
     project_name = File.basename(directory)
 
-    what_to_clean = [
+    what_to_clean = ponse = [
       {:file => 'META-INF/MANIFEST.MF', :pattern_to_clean => '^Rundeck-Archive-Export-Date'},
       {:file => "rundeck-#{project_name}/files/etc/project.properties", :pattern_to_clean => '^#'}
-    ] 
-    
+    ]
+
     what_to_clean.each do |i|
       file = File.join(directory, i[:file])
       pattern = i[:pattern_to_clean]
@@ -235,15 +235,26 @@ class Rundeck
     end
 
     ids = ids.flatten.to_set.to_a
-    bulk_delete_executions(ids)
+    r, f, s = bulk_delete_executions(ids)
+    puts "Total executions: #{r} Success: #{s} Failed: #{f}"
+
   end
 
   def bulk_delete_executions(ids)
     
     max = 25
+    failed_count = 0
+    success_count = 0
+    request_count = 0
+
     ids.each_slice(max) do |chunk|
-        puts chunk    
+        reponse_json = JSON.parse(RestClient.post build_uri("/api/14/executions/delete"), { 'ids' => chunk }.to_json, :content_type => :json, :accept => :json)
+        failed_count += reponse_json['failedCount'].to_i
+        success_count += reponse_json['successCount'].to_i
+        request_count += reponse_json['requestCount'].to_i
     end
+
+    return request_count, failed_count, success_count
   end
 
   def get_executions_ids(executions)

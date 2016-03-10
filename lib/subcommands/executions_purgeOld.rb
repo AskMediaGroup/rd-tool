@@ -19,9 +19,8 @@ class ExecutionsPurgeOld < Subcommand
     days_to_keep = parameters[0]
     puts "Running #{subcommand_full} #{days_to_keep}"
 
-    puts "This subcommand is not ready yet"
-    #rundeck = Rundeck.new
-    #puts rundeck.purge_executions(days_to_keep.to_i)
+    rundeck = Rundeck.new
+    puts rundeck.purge_executions(days_to_keep.to_i)
     
   end
 
