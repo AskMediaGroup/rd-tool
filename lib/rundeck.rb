@@ -180,7 +180,7 @@ class Rundeck
 
     response_json = JSON.parse(RestClient.put uri, File.read(project_file) , {:content_type => :zip, :accept => :json})
     if response_json['import_status'] == 'successful'
-      puts "Project #{project_name} iget_executions_ids(executions)mported successfully"
+      puts "Project #{project_name} imported successfully"
     else
       raise "Import failed for project #{project_name} because import_status = #{response_json['import_status']}" 
     end
