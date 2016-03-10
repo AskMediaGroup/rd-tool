@@ -11,6 +11,7 @@ rd-tool requires at least Rundeck 2.6.0
 
 Available subcommands:
 
+  executions purgeOld <days_to_keep>                                                        Remove executions older than days_to_keep
   jobs copyToAllProjects <project_origin> [<exclude_project_regexp>]                        Copy all the jobs from project_origin to all projects excluding, keep group hierarchy and create new UUIDs
   jobs copyToProject <project_origin> <project_destination>                                 Copy all the jobs from project_origin to project_destination, keep group hierarchy and create new UUIDs
   project backupToFile <export_project> <export_file>                                       Backup Rundeck projects to a zip file
@@ -26,6 +27,7 @@ Available subcommands:
 
 Examples:
 
+  rd-tool executions purgeOld 1
   rd-tool jobs copyToAllProjects PROJECT1 '^ADMIN$'
   rd-tool jobs copyToProject PROJECT1 PROJECT2
   rd-tool project backupToFile foo foo.zip
