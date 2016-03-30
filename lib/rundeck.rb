@@ -14,7 +14,7 @@ class Rundeck
     #TODO: Read token from file
     @token = token
     @instance = instance
-    @url = "http://#{instance}"
+    @url = "https://#{instance}"
 
     raise "Rundeck #{instance} is not active or its API is not available!" unless rundeck_active?
 
