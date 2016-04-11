@@ -187,6 +187,17 @@ class Rundeck
 
   end
 
+  def project_config(project, config=nil)
+    if config == nil
+        response_json = JSON.parse(get("/api/14/project/#{project}/config"))
+    else
+        raise "Config should be a Hash" if not config.is_a?(Hash)
+
+        uri = build_uri("/api/14/project/#{project}/config")
+        response_json = JSON.parse(RestClient.put uri, JSON.dump(config), {:content_type => :json, :accept => :json})  
+    end
+  end
+
   def clean_raw_project(directory)
 
     project_name = File.basename(directory)
