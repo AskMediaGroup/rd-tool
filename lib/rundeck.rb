@@ -22,7 +22,6 @@ class Rundeck
     @endpoint ||= @config['rundeck_api_endpoint']
     @instance = URI(@endpoint).host
 
-    puts "#{@token}, #{@endpoint}, #{@instance}"
     raise "Rundeck #{instance} is not active or its API is not available!" unless rundeck_active?
 
   end
@@ -185,9 +184,7 @@ class Rundeck
 
     uri = build_uri("/api/14/project/#{project_name}/import", query_parameters)
 
-puts uri
     response_json = JSON.parse(RestClient.put uri, File.read(project_file) , {:content_type => :zip, :accept => :json})
-puts response_json
     if response_json['import_status'] == 'successful'
       puts "Project #{project_name} imported successfully"
     else
