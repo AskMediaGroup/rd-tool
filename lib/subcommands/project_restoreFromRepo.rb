@@ -25,7 +25,7 @@ class ProjectRestoreFromRepo < Subcommand
 
     rundeck = Rundeck.new
     rundeck.projects_to_zip_from_dir(@@project_definitions_directory)
-    rundeck.projects_import(File.join(@@tmp_directory, "#{project_name}.zip" ))
+    rundeck.project_import(File.join(@@tmp_directory, "#{project_name}.zip" ))
 
   end
 
