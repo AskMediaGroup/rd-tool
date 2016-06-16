@@ -1,4 +1,5 @@
 require 'set'
+require 'uri'
 require 'socket'
 require 'rest-client'
 require 'json'
@@ -8,14 +9,20 @@ class Rundeck
 
   attr_reader :token, :instance, :url, :port
 
-  def initialize(instance=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_default_instance'], token=YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))['rundeck_token'])
+  def initialize(endpoint = nil, token = nil)
 
     #TODO: Factory for REST Client
     #TODO: Read token from file
-    @token = token
-    @instance = instance
-    @url = "https://#{instance}"
+    @config = YAML.load_file(File.join(File.dirname(File.dirname(__FILE__)), 'config.yaml'))
 
+    @token = token
+    @endpoint = endpoint
+   
+    @token ||= @config['rundeck_token']
+    @endpoint ||= @config['rundeck_api_endpoint']
+    @instance = URI(@endpoint).host
+
+    puts "#{@token}, #{@endpoint}, #{@instance}"
     raise "Rundeck #{instance} is not active or its API is not available!" unless rundeck_active?
 
   end
@@ -46,7 +53,7 @@ class Rundeck
     query_parameters.each { |param, value| qps << param.to_s + '=' + value.to_s }
     qps = qps.join('&')
 
-    "#{@url}#{path}?#{qps}"
+    "#{@endpoint}#{path}?#{qps}"
   end
 
   def jobs(project)
@@ -178,7 +185,9 @@ class Rundeck
 
     uri = build_uri("/api/14/project/#{project_name}/import", query_parameters)
 
+puts uri
     response_json = JSON.parse(RestClient.put uri, File.read(project_file) , {:content_type => :zip, :accept => :json})
+puts response_json
     if response_json['import_status'] == 'successful'
       puts "Project #{project_name} imported successfully"
     else

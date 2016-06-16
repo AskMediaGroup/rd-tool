@@ -7,9 +7,9 @@ class ProjectExportToInstance < Subcommand
     @parameters = parameters
     @subcommand_action = "exportToInstance"
     @subcommand_full = "project #{subcommand_action}"
-    @parameters_tag = "<project_name> <rundeck_instance> [del_proj] [imp_exec]"
+    @parameters_tag = "<project_name> <rundeck_api_endpoint> [del_proj] [imp_exec]"
     @parameters_length = 2 # This is 2 here because the other parameters are optional
-    @cmd_example = "#{subcommand_full} foo_project rundeck.foo.bar true false"
+    @cmd_example = "#{subcommand_full} foo_project https://rundeck.foo.bar true false"
     @description = "Export Rundeck project to another Rundeck instance, optionally: delete project and import executions as boolean flags"
 
   end
@@ -17,7 +17,7 @@ class ProjectExportToInstance < Subcommand
   def run
 
     project_name = parameters[0]
-    rundeck_instance = parameters[1]
+    rundeck_endpoint = parameters[1]
 
     if parameters.length > 2
         delete_project_before_import = parameters[2].to_bool
@@ -27,13 +27,13 @@ class ProjectExportToInstance < Subcommand
         import_executions = true
     end
 
-    puts "Running #{subcommand_full} #{project_name} #{rundeck_instance} #{delete_project_before_import} #{import_executions}"
+    puts "Running #{subcommand_full} #{project_name} #{rundeck_endpoint} #{delete_project_before_import} #{import_executions}"
 
     local_project_file = File.join(@@tmp_directory,project_name)
     rundeck = Rundeck.new
     rundeck.project_to_file(project_name, local_project_file)
     
-    rundeck = Rundeck.new(rundeck_instance)
+    rundeck = Rundeck.new(rundeck_endpoint)
     rundeck.project_import(local_project_file, delete_project_before_import, import_executions)
 
   end
