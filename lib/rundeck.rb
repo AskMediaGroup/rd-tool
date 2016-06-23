@@ -68,7 +68,7 @@ class Rundeck
     File.open(definition_file, 'w') { |file| file.write(response_yaml)}
   end
 
-  def jobs_import(project,jobs_file)
+  def jobs_import(project, jobs_file)
     response_json = JSON.parse(RestClient.post build_uri("/api/14/project/#{project}/jobs/import", 
                     {:dupeOption => 'update', :uuidOption => 'remove'}), File.read(jobs_file), 
                     { :accept => :json, :content_type => 'application/yaml', :format => 'yaml'})
