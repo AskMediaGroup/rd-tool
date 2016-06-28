@@ -65,6 +65,13 @@ class Git
 
   alias_method :clone, :git_clone
 
+  def git_checkout(branch)
+    result, output = run("git checkout '#{branch}'")
+    return result
+  end
+
+  alias_method :checkout, :git_checkout
+
   def git_something_to_commit?
     result, output = run("git status -z --porcelain")
     if output.empty? then return false else return true end
