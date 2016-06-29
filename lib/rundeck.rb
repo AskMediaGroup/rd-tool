@@ -55,6 +55,37 @@ class Rundeck
     "#{@endpoint}#{path}?#{qps}"
   end
 
+  def job_delete_by_group(project, group)
+    job_delete(job_ids(project, { :groupPathExact => group }))
+  end
+
+  def job_delete(ids)
+    if ids.count < 1
+      puts "There is no jobs matching the given pattern"
+      return true
+    end
+    params = {:content_type => :json, :accept => :json}
+    uri = build_uri("/api/14/jobs/delete")
+    response_json = JSON.parse(RestClient.post(uri, { 'ids' => ids.to_a }.to_json, params))
+    allsuccessful = response_json['allsuccessful']
+    if allsuccessful
+      puts "#{response_json['requestCount']} jobs were deleted successfully"
+    else
+      puts response_json
+    end
+    return allsuccessful
+  end
+
+  def job_ids(project, filters={})
+    params = {:accept => :json}
+    qp = filters
+    uri = build_uri("/api/14/project/#{project}/jobs", qp)
+    response_json = JSON.parse(RestClient.get(uri, params))
+    ids = []
+    response_json.each { |id| ids << id['id'] }
+    return ids
+  end
+
   def jobs(project)
     response_json = JSON.parse(get("/api/14/project/#{project}/jobs"))
     jobs = Array.new
