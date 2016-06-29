@@ -66,7 +66,7 @@ class Rundeck
     end
     params = {:content_type => :json, :accept => :json}
     uri = build_uri("/api/14/jobs/delete")
-    response_json = JSON.parse(RestClient.post(uri, { 'ids' => ids.to_a }.to_json, params))
+    response_json = JSON.parse(RestClient.post(uri, { 'ids' => ids }.to_json, params))
     allsuccessful = response_json['allsuccessful']
     if allsuccessful
       puts "#{response_json['requestCount']} jobs were deleted successfully"
