@@ -4,10 +4,6 @@ class ProjectsReplicateToInstance < Subcommand
 
   def initialize(parameters=nil)
 
-    # Temporal Workaround for CD-60 - PLEASE REMOVE AS SOON AS WE DON'T USE
-    # THIS COMMAND ANYMORE TO SYNC STANDBY INSTANCES !!!!
-    OpenSSL::SSL.const_set(:VERIFY_PEER, OpenSSL::SSL::VERIFY_NONE)
-
     @parameters = parameters
     @subcommand_action = "replicateToInstance"
     @subcommand_full = "projects #{subcommand_action}"
@@ -19,6 +15,10 @@ class ProjectsReplicateToInstance < Subcommand
   end
 
   def run
+
+    # Temporal Workaround for CD-60 - PLEASE REMOVE AS SOON AS WE DON'T USE
+    # THIS COMMAND ANYMORE TO SYNC STANDBY INSTANCES !!!!
+    OpenSSL::SSL.const_set(:VERIFY_PEER, OpenSSL::SSL::VERIFY_NONE)
 
     if parameters.length == 2
         token = parameters[1]
