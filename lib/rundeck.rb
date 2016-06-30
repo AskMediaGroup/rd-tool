@@ -55,6 +55,22 @@ class Rundeck
     "#{@endpoint}#{path}?#{qps}"
   end
 
+  def job_run_by_name(project, name)
+    ids = job_ids(project, {:jobExactFilter => name})
+    if ids.count != 1
+      puts "#{ids.count} jobs found!"
+      return false
+    end
+    job_run_by_id(ids.first)
+  end
+
+  def job_run_by_id(id, options={})
+    params = {:content_type => :json, :accept => :json}
+    uri = build_uri("/api/14/job/#{id}/run")
+    response_json = JSON.parse(RestClient.post(uri, options.to_json, params))
+    puts "#{response_json['status']} on #{response_json['href']}"
+  end
+
   def job_delete_by_group(project, group)
     job_delete(job_ids(project, { :groupPathExact => group }))
   end
