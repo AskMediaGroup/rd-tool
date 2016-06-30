@@ -37,6 +37,14 @@ class ProjectPromoteToInstance < Subcommand
     rundeck = Rundeck.new(rundeck_endpoint, token)
     rundeck.project_import(local_project_file, delete_project_before_import, import_executions)
 
+    ## Force to sync Library by execution the rundeck job after promotion
+    ## This execution is not followed so we don't know when this was successfull or not
+    job_name = 'rundeck-synchronize-library'
+    job_project = 'ADMIN'
+    puts "Running #{job_name} in #{job_project}"
+    rundeck.job_run_by_name(job_project, job_name)
+    puts "Execution result is not verified... please verify it manually if this is important for you"
+
   end
 
 end
