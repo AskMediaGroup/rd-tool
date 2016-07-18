@@ -7,7 +7,7 @@ class ProjectPromoteToInstance < Subcommand
     @parameters = parameters
     @subcommand_action = "promoteToInstance"
     @subcommand_full = "project #{subcommand_action}"
-    @parameters_tag = "<project_name> <rundeck_api_endpoint> [api_token]"
+    @parameters_tag = "<project_name> <rundeck_api_endpoint> [del_proj] [api_token]"
     @parameters_length = 2
     @cmd_example = "#{subcommand_full} foo_project https://rundeck.foo.bar"
     @description = "Export Rundeck project to another Rundeck instance, node delete and no executions will be import"
@@ -19,13 +19,9 @@ class ProjectPromoteToInstance < Subcommand
     project_name = parameters[0]
     rundeck_endpoint = parameters[1]
 
-    if parameters.length == 3
-        token = parameters[2]
-    else
-        token = nil
-    end
+    token = parameters.length > 3 ? parameters[3] : token = nil
 
-    delete_project_before_import = false
+    delete_project_before_import = parameters.length > 2 ? parameters[2].to_bool : false
     import_executions = false
 
     puts "Running #{subcommand_full} #{project_name} #{rundeck_endpoint}"
