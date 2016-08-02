@@ -26,21 +26,25 @@ class ProjectPromoteToInstance < Subcommand
 
     puts "Running #{subcommand_full} #{project_name} #{rundeck_endpoint}"
 
-    local_project_file = File.join(@@tmp_directory,project_name)
+    local_project_file = File.join(@@tmp_directory, project_name)
     rundeck = Rundeck.new
     rundeck.project_to_file(project_name, local_project_file)
 
     rundeck = Rundeck.new(rundeck_endpoint, token)
     rundeck.project_import(local_project_file, delete_project_before_import, import_executions)
 
-    ## Force to sync Library by execution the rundeck job after promotion
-    ## This execution is not followed so we don't know when this was successfull or not
-    job_name = 'rundeck-synchronize-library'
-    job_project = 'ADMIN'
-    puts "Running #{job_name} in #{job_project}"
-    rundeck.job_run_by_name(job_project, job_name)
-    puts "Execution result is not verified... please verify it manually if this is important for you"
-
+    # Sync Library for the promoted job, includes delete and import again from destination instance
+    result = rundeck.job_delete_by_group(project_name, 'Library')
+    puts "Warning: Deleting #{job_group} group within #{project_name}" if ! result
+    
+    library_project = 'LIBRARY'
+    local_project_file = File.join(@@tmp_directory, library_project) + ".yaml"
+    puts "Exporting #{library_project} jobs: #{rundeck.jobs(library_project)}"
+    rundeck.jobs_to_file(library_project, local_project_file)
+    puts "The file #{local_project_file} was created successfully" if File.exists?(local_project_file)
+    puts "Import jobs on #{project_name}"
+    rundeck.jobs_import(project_name, local_project_file)
+    
   end
 
 end
